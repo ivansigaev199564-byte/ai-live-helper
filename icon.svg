@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Ai Live Helper">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a58ff"/>
+      <stop offset="1" stop-color="#8a3dff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="230" fill="url(#bg)"/>
+  <circle cx="512" cy="512" r="420" fill="url(#glow)"/>
+  <g fill="#fff">
+    <rect x="181" y="437" width="62" height="150" rx="31"/>
+    <rect x="281" y="367" width="62" height="290" rx="31"/>
+    <rect x="381" y="297" width="62" height="430" rx="31"/>
+    <rect x="481" y="232" width="62" height="560" rx="31"/>
+    <rect x="581" y="297" width="62" height="430" rx="31"/>
+    <rect x="681" y="367" width="62" height="290" rx="31"/>
+    <rect x="781" y="437" width="62" height="150" rx="31"/>
+    <path d="M790 132 Q790 208 868 208 Q790 208 790 286 Q790 208 712 208 Q790 208 790 132 Z"/>
+    <path d="M880 291 Q880 324 913 324 Q880 324 880 357 Q880 324 847 324 Q880 324 880 291 Z"/>
+  </g>
+</svg>

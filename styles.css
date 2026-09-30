@@ -1,0 +1,266 @@
+/* Ai Live Helper — общий стиль сайта.
+   Без внешних шрифтов и скриптов: страница не делает ни одного запроса
+   к сторонним серверам. Светлая и тёмная тема — по настройке системы. */
+
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --surface-2: #eef1fb;
+  --text: #0f1222;
+  --text-2: #4a5068;
+  --text-3: #7a8098;
+  --border: rgba(15, 18, 34, 0.09);
+  --accent: #2f5bff;
+  --accent-2: #7b3fff;
+  --accent-soft: rgba(47, 91, 255, 0.1);
+  --ok: #0f8a6b;
+  --shadow: 0 1px 2px rgba(15, 18, 34, 0.04), 0 8px 28px rgba(15, 18, 34, 0.06);
+  --radius: 20px;
+  --radius-sm: 12px;
+  --max: 1080px;
+  --prose: 720px;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0c14;
+    --surface: #151726;
+    --surface-2: #1c1f33;
+    --text: #f2f3fa;
+    --text-2: #b4b8cc;
+    --text-3: #8488a0;
+    --border: rgba(255, 255, 255, 0.09);
+    --accent: #6f8bff;
+    --accent-2: #a37bff;
+    --accent-soft: rgba(111, 139, 255, 0.14);
+    --ok: #3ccf9f;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.6 var(--font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+a:focus-visible, summary:focus-visible, .button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; letter-spacing: -0.02em; margin: 0; }
+h1 { font-size: clamp(2.1rem, 7vw, 3.6rem); font-weight: 800; }
+h2 { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 750; }
+h3 { font-size: 1.12rem; font-weight: 700; letter-spacing: -0.01em; }
+p { margin: 0 0 1em; }
+
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+.prose { max-width: var(--prose); }
+
+/* ——— Язык: оба варианта на странице, переключение без скриптов (:target).
+   По умолчанию русский; #en показывает английский. Английский блок идёт
+   первым, чтобы селектор соседа мог спрятать русский. ——— */
+.lang-en { display: none; }
+.lang-en:target { display: block; }
+.lang-en:target ~ .lang-ru { display: none; }
+
+/* ——— Шапка ——— */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(160%) blur(16px);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.site-header .wrap { display: flex; align-items: center; gap: 12px; min-height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 750; letter-spacing: -0.01em; }
+.brand:hover { text-decoration: none; }
+.brand svg { width: 30px; height: 30px; border-radius: 8px; }
+.nav { margin-left: auto; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+.nav a { color: var(--text-2); font-size: 0.93rem; padding: 6px 10px; border-radius: 999px; }
+.nav a:hover { color: var(--text); background: var(--surface-2); text-decoration: none; }
+.nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+.nav .switch { border: 1px solid var(--border); font-weight: 600; color: var(--text); }
+@media (max-width: 520px) {
+  .nav .hide-sm { display: none; }
+}
+
+/* ——— Первый экран ——— */
+.hero { position: relative; overflow: hidden; padding: 56px 0 40px; }
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20% auto;
+  height: 520px;
+  background:
+    radial-gradient(closest-side, color-mix(in srgb, var(--accent) 28%, transparent), transparent 70%) 20% 40% / 60% 100% no-repeat,
+    radial-gradient(closest-side, color-mix(in srgb, var(--accent-2) 24%, transparent), transparent 70%) 80% 20% / 55% 90% no-repeat;
+  pointer-events: none;
+  z-index: -1;
+}
+.hero .icon { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 14px 40px rgba(47, 91, 255, 0.35); margin-bottom: 24px; }
+.hero h1 .grad {
+  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lead { font-size: clamp(1.08rem, 2.6vw, 1.3rem); color: var(--text-2); max-width: 640px; margin: 18px 0 28px; }
+.example {
+  display: inline-block;
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px 16px 16px 4px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+  max-width: 560px;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 28px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.9rem; font-weight: 600;
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent);
+}
+.chip.money { background: color-mix(in srgb, var(--ok) 14%, transparent); color: var(--ok); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 0 22px; border-radius: 14px;
+  font-weight: 650; font-size: 1rem;
+  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  color: #fff;
+}
+.button:hover { text-decoration: none; filter: brightness(1.06); }
+.button.secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+.button[aria-disabled="true"] { cursor: default; }
+.note { font-size: 0.9rem; color: var(--text-3); }
+
+/* ——— Разделы ——— */
+section { padding: 36px 0; }
+.section-title { margin-bottom: 8px; }
+.section-lead { color: var(--text-2); margin-bottom: 24px; max-width: 640px; }
+
+.grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .grid.three { grid-template-columns: repeat(3, 1fr); } }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+.card p { color: var(--text-2); margin: 6px 0 0; font-size: 0.98rem; }
+.card .glyph {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+  margin-bottom: 14px;
+}
+.card .glyph svg { width: 22px; height: 22px; }
+
+.privacy-band {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 12%, var(--surface)), color-mix(in srgb, var(--accent-2) 12%, var(--surface)));
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 28px 22px;
+}
+.checks { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px; }
+.checks li { position: relative; padding-left: 30px; color: var(--text-2); }
+.checks li::before {
+  content: "";
+  position: absolute; left: 0; top: 0.35em;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--ok) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+/* ——— Текстовые страницы: политика, условия, поддержка ——— */
+.doc { padding: 40px 0 24px; }
+.doc h1 { font-size: clamp(1.9rem, 6vw, 2.7rem); margin-bottom: 10px; }
+.doc .meta { color: var(--text-3); font-size: 0.95rem; margin-bottom: 28px; }
+.doc h2 { font-size: 1.35rem; margin: 36px 0 12px; }
+.doc h3 { margin: 22px 0 8px; }
+.doc p, .doc li { color: var(--text-2); }
+.doc strong { color: var(--text); }
+.doc ul { padding-left: 1.2em; margin: 0 0 1em; }
+.doc li { margin: 0.35em 0; }
+.summary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow);
+}
+.summary ul { margin: 0; }
+
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 0 1em; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 0.95rem; background: var(--surface); }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+th { font-weight: 650; color: var(--text); background: var(--surface-2); }
+td { color: var(--text-2); }
+tr:last-child td { border-bottom: 0; }
+
+/* ——— Вопросы и ответы ——— */
+.faq { display: grid; gap: 10px; }
+.faq details {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0 18px;
+  box-shadow: var(--shadow);
+}
+.faq summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 650;
+  padding: 16px 28px 16px 0;
+  position: relative;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "";
+  position: absolute; right: 2px; top: 50%;
+  width: 9px; height: 9px;
+  border-right: 2px solid var(--text-3); border-bottom: 2px solid var(--text-3);
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.faq details[open] summary::after { transform: translateY(-30%) rotate(-135deg); }
+.faq details > div { padding: 0 0 16px; color: var(--text-2); }
+.faq details > div p:last-child { margin-bottom: 0; }
+
+.contact-card { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+
+/* ——— Подвал ——— */
+.site-footer { border-top: 1px solid var(--border); margin-top: 32px; padding: 24px 0 40px; color: var(--text-3); font-size: 0.92rem; }
+.site-footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; justify-content: space-between; }
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.site-footer a { color: var(--text-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .faq summary::after { transition: none; }
+}
